@@ -1,50 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
-import {Button, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row} from "reactstrap";
-import {useState} from "react";
-import axios from "axios";
+import logo from "./logo.svg";
+import "./App.css";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardHeader,
+  CardText,
+  CardTitle,
+  Col,
+  Container,
+  Row,
+} from "reactstrap";
+import { MEAL_PLAN } from "./mock-data/meal-plan";
+import { useState } from "react";
+import {DayView} from "./components/DayView";
 
 function App() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selection, setSelection] = useState('');
-  const [template, setTemplate] = useState({});
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const options = [1200, 1500, 1800, 2000, 2500];
+  const mealplan = MEAL_PLAN.meals;
+  const [rSelected, setRSelected] = useState(2);
+  const [viewSelected, setViewSelected] = useState("today"); // next, today, tomorrow, or week
 
-  const getMealPlan = async() => {
-    // const res = await fetch('meal?calories=2000');
-    // const data = await res.json();
-    // console.log(data);
-    // setTemplate(data);
-    const res = await axios.get('meal' , {params: { calories: selection}});
-    console.log(res.data);
-    setTemplate(res.data);
-  }
+  console.log(mealplan)
+  console.log(mealplan["LUNCH"])
 
   return (
-      <Container>
-
-        <h1>Welcome Someone</h1>
-        <p>Please select the caloric intake that best matches your lifestyle</p>
-        <Row>
-          <Col xs="auto">
-            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-              <DropdownToggle
-                  caret>{selection === '' ? 'Desired Caloric Intake' : `${selection} Calories`}</DropdownToggle>
-              <DropdownMenu>
-                {options.map(value => (
-                    <DropdownItem key={value} onClick={() => setSelection(value)}>{value} Calories</DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </Col>
-          <Col>
-            <Button onClick={() => getMealPlan()}>View Plan</Button>
-          </Col>
-        </Row>
-
-
-      </Container>
+    <Container>
+      <Row>
+        <Col className="bg-light border">
+          <h2 align="center">Meal Planner</h2>
+        </Col>
+      </Row>
+      <br />
+      <Row>
+        <ButtonGroup>
+          <Button
+            color="primary"
+            outline
+            onClick={() => setRSelected(1)}
+            active={rSelected === 1}
+          >
+            Next Meal
+          </Button>
+          <Button
+            color="primary"
+            outline
+            onClick={() => setRSelected(2)}
+            active={rSelected === 2}
+          >
+            Today's Meals
+          </Button>
+          <Button
+            color="primary"
+            outline
+            onClick={() => setRSelected(3)}
+            active={rSelected === 3}
+          >
+            Tomorrow's Meals
+          </Button>
+          <Button
+            color="primary"
+            outline
+            onClick={() => setRSelected(4)}
+            active={rSelected === 4}
+          >
+            This Week's Meals
+          </Button>
+        </ButtonGroup>
+      </Row>
+      <br/>
+        <Row><Col>Meals for April 21, 2023</Col></Row>
+      <br />
+      <DayView meals={mealplan}/>
+    </Container>
   );
 }
 
