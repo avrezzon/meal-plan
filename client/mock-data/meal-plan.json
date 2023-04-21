@@ -1,15 +1,15 @@
 {
   "meals": {
-    "DINNER": [
+    "BREAKFAST": [
       {
-        "servingQty": 3.0,
-        "type": "VEGETABLE",
+        "servingQty": 1.0,
+        "type": "FRUIT",
         "foodList": [
           {
-            "name": "Cottage cheese",
-            "servingSize": 0.75,
-            "unitOfMeasure": "CUP",
-            "type": "PROTEIN"
+            "name": "Orange",
+            "servingSize": 1.0,
+            "unitOfMeasure": "UNIT",
+            "type": "FRUIT"
           }
         ]
       },
@@ -18,7 +18,7 @@
         "type": "CARBOHYDRATE",
         "foodList": [
           {
-            "name": "Oatmeal",
+            "name": "Lowfat yogurt",
             "servingSize": 1.0,
             "unitOfMeasure": "CUP",
             "type": "CARBOHYDRATE"
@@ -26,14 +26,40 @@
         ]
       },
       {
-        "servingQty": 2.0,
+        "servingQty": 1.5,
         "type": "PROTEIN",
         "foodList": [
           {
-            "name": "Whole eggs",
-            "servingSize": 3.0,
-            "unitOfMeasure": "UNIT",
+            "name": "Beans",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
             "type": "PROTEIN"
+          }
+        ]
+      }
+    ],
+    "MID_AFTERNOON_SNACK": [
+      {
+        "servingQty": 1.5,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Turkey",
+            "servingSize": 3.0,
+            "unitOfMeasure": "OZ",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Apple",
+            "servingSize": 1.0,
+            "unitOfMeasure": "UNIT",
+            "type": "FRUIT"
           }
         ]
       }
@@ -44,10 +70,48 @@
         "type": "FRUIT",
         "foodList": [
           {
-            "name": "Grapefruit",
+            "name": "Berries",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "FRUIT"
+          }
+        ]
+      }
+    ],
+    "MID_MORNING_SNACK": [
+      {
+        "servingQty": 1.0,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Beans",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Apple",
             "servingSize": 1.0,
             "unitOfMeasure": "UNIT",
             "type": "FRUIT"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE",
+        "foodList": [
+          {
+            "name": "Yams",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "CARBOHYDRATE"
           }
         ]
       }
@@ -58,10 +122,10 @@
         "type": "VEGETABLE",
         "foodList": [
           {
-            "name": "Tuna",
-            "servingSize": 3.0,
-            "unitOfMeasure": "OZ",
-            "type": "PROTEIN"
+            "name": "Mushrooms",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "VEGETABLE"
           }
         ]
       },
@@ -70,9 +134,9 @@
         "type": "PROTEIN",
         "foodList": [
           {
-            "name": "Protein shake",
-            "servingSize": 1.0,
-            "unitOfMeasure": "UNIT",
+            "name": "Buffalo",
+            "servingSize": 3.0,
+            "unitOfMeasure": "OZ",
             "type": "PROTEIN"
           }
         ]
@@ -90,66 +154,16 @@
         ]
       }
     ],
-    "BREAKFAST": [
+    "DINNER": [
       {
-        "servingQty": 1.0,
-        "type": "FRUIT",
+        "servingQty": 3.0,
+        "type": "VEGETABLE",
         "foodList": [
           {
-            "name": "Berries",
+            "name": "Tomatoes",
             "servingSize": 1.0,
             "unitOfMeasure": "CUP",
-            "type": "FRUIT"
-          }
-        ]
-      },
-      {
-        "servingQty": 1.0,
-        "type": "CARBOHYDRATE",
-        "foodList": [
-          {
-            "name": "Oatmeal",
-            "servingSize": 1.0,
-            "unitOfMeasure": "CUP",
-            "type": "CARBOHYDRATE"
-          }
-        ]
-      },
-      {
-        "servingQty": 1.5,
-        "type": "PROTEIN",
-        "foodList": [
-          {
-            "name": "Turkey",
-            "servingSize": 3.0,
-            "unitOfMeasure": "OZ",
-            "type": "PROTEIN"
-          }
-        ]
-      }
-    ],
-    "MID_MORNING_SNACK": [
-      {
-        "servingQty": 1.0,
-        "type": "PROTEIN",
-        "foodList": [
-          {
-            "name": "Egg whites",
-            "servingSize": 6.0,
-            "unitOfMeasure": "UNIT",
-            "type": "PROTEIN"
-          }
-        ]
-      },
-      {
-        "servingQty": 1.0,
-        "type": "FRUIT",
-        "foodList": [
-          {
-            "name": "Berries",
-            "servingSize": 1.0,
-            "unitOfMeasure": "CUP",
-            "type": "FRUIT"
+            "type": "VEGETABLE"
           }
         ]
       },
@@ -164,30 +178,16 @@
             "type": "CARBOHYDRATE"
           }
         ]
-      }
-    ],
-    "MID_AFTERNOON_SNACK": [
+      },
       {
-        "servingQty": 1.5,
+        "servingQty": 2.0,
         "type": "PROTEIN",
         "foodList": [
           {
-            "name": "Chicken",
+            "name": "Extra-lean beef",
             "servingSize": 3.0,
             "unitOfMeasure": "OZ",
             "type": "PROTEIN"
-          }
-        ]
-      },
-      {
-        "servingQty": 1.0,
-        "type": "FRUIT",
-        "foodList": [
-          {
-            "name": "Grapefruit",
-            "servingSize": 1.0,
-            "unitOfMeasure": "UNIT",
-            "type": "FRUIT"
           }
         ]
       }
