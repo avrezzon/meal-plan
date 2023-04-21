@@ -1,0 +1,76 @@
+{
+  "dailyLayout": {
+    "MID_AFTERNOON_SNACK": [
+      {
+        "servingQty": 1.5,
+        "type": "PROTEIN"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT"
+      }
+    ],
+    "EVENING_SNACK": [
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT"
+      }
+    ],
+    "MID_MORNING_SNACK": [
+      {
+        "servingQty": 1.0,
+        "type": "PROTEIN"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE"
+      }
+    ],
+    "DINNER": [
+      {
+        "servingQty": 3.0,
+        "type": "VEGETABLE"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE"
+      },
+      {
+        "servingQty": 2.0,
+        "type": "PROTEIN"
+      }
+    ],
+    "BREAKFAST": [
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE"
+      },
+      {
+        "servingQty": 1.5,
+        "type": "PROTEIN"
+      }
+    ],
+    "LUNCH": [
+      {
+        "servingQty": 2.0,
+        "type": "VEGETABLE"
+      },
+      {
+        "servingQty": 2.0,
+        "type": "PROTEIN"
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE"
+      }
+    ]
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "meals": {
+    "DINNER": [
+      {
+        "servingQty": 3.0,
+        "type": "VEGETABLE",
+        "foodList": [
+          {
+            "name": "Cottage cheese",
+            "servingSize": 0.75,
+            "unitOfMeasure": "CUP",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE",
+        "foodList": [
+          {
+            "name": "Oatmeal",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "CARBOHYDRATE"
+          }
+        ]
+      },
+      {
+        "servingQty": 2.0,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Whole eggs",
+            "servingSize": 3.0,
+            "unitOfMeasure": "UNIT",
+            "type": "PROTEIN"
+          }
+        ]
+      }
+    ],
+    "EVENING_SNACK": [
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Grapefruit",
+            "servingSize": 1.0,
+            "unitOfMeasure": "UNIT",
+            "type": "FRUIT"
+          }
+        ]
+      }
+    ],
+    "LUNCH": [
+      {
+        "servingQty": 2.0,
+        "type": "VEGETABLE",
+        "foodList": [
+          {
+            "name": "Tuna",
+            "servingSize": 3.0,
+            "unitOfMeasure": "OZ",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 2.0,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Protein shake",
+            "servingSize": 1.0,
+            "unitOfMeasure": "UNIT",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE",
+        "foodList": [
+          {
+            "name": "Brown rice",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "CARBOHYDRATE"
+          }
+        ]
+      }
+    ],
+    "BREAKFAST": [
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Berries",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "FRUIT"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE",
+        "foodList": [
+          {
+            "name": "Oatmeal",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "CARBOHYDRATE"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.5,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Turkey",
+            "servingSize": 3.0,
+            "unitOfMeasure": "OZ",
+            "type": "PROTEIN"
+          }
+        ]
+      }
+    ],
+    "MID_MORNING_SNACK": [
+      {
+        "servingQty": 1.0,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Egg whites",
+            "servingSize": 6.0,
+            "unitOfMeasure": "UNIT",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Berries",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "FRUIT"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "CARBOHYDRATE",
+        "foodList": [
+          {
+            "name": "Whole wheat pasta",
+            "servingSize": 1.0,
+            "unitOfMeasure": "CUP",
+            "type": "CARBOHYDRATE"
+          }
+        ]
+      }
+    ],
+    "MID_AFTERNOON_SNACK": [
+      {
+        "servingQty": 1.5,
+        "type": "PROTEIN",
+        "foodList": [
+          {
+            "name": "Chicken",
+            "servingSize": 3.0,
+            "unitOfMeasure": "OZ",
+            "type": "PROTEIN"
+          }
+        ]
+      },
+      {
+        "servingQty": 1.0,
+        "type": "FRUIT",
+        "foodList": [
+          {
+            "name": "Grapefruit",
+            "servingSize": 1.0,
+            "unitOfMeasure": "UNIT",
+            "type": "FRUIT"
+          }
+        ]
+      }
+    ]
+  }
+}
