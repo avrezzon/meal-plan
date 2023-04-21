@@ -9,6 +9,6 @@ import java.util.Map;
 
 @Data
 @AllArgsConstructor
-public class DailyMealPlan implements Serializable {
-    private Map<MealType, List<ServingPortion>> meals;
+public class DailyMealPlanTemplate implements Serializable {
+    private Map<MealType, List<Serving>> dailyLayout;
 }

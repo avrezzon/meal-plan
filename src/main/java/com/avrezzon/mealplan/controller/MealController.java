@@ -1,41 +1,31 @@
 package com.avrezzon.mealplan.controller;
 
-import com.avrezzon.mealplan.model.CaloricIntake;
 import com.avrezzon.mealplan.model.DailyMealPlan;
-import com.avrezzon.mealplan.service.DailyMealPlanLayoutFactory;
+import com.avrezzon.mealplan.model.DailyMealPlanTemplate;
+import com.avrezzon.mealplan.service.MealPlannerService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequestMapping("meal")
+@RequiredArgsConstructor
 public class MealController {
+
+    private final MealPlannerService service;
     @GetMapping
-    public DailyMealPlan getMealPlanLayout(@RequestParam String calories){
+    public DailyMealPlanTemplate getMealPlanLayout(@RequestParam String calories){
 
         log.info("Generating meal plan for {} calories.", calories);
+        return service.generateMealPlanTemplate(calories);
 
-        switch (calories) {
-            case "1200" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1200);
-            }
-            case "1500" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1500);
-            }
-            case "1800" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1800);
-            }
-            case "2000" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_2000);
-            }
-            case "2500" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_2500);
-            }
-            default -> throw new IllegalStateException();
-        }
+    }
+
+    @PostMapping
+    public DailyMealPlan getSampleMealPlan(@RequestParam String calories){
+        log.info("Generating meal plan example for {} calories.", calories);
+        return service.generateMealPlanExample(calories);
     }
 
 

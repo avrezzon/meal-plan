@@ -1,8 +1,6 @@
 package com.avrezzon.mealplan.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,5 +9,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Serving implements Serializable {
     private Double servingQty;
+    private FoodType type;
 
 }

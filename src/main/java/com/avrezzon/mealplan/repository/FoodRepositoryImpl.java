@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @Slf4j
 @Repository
@@ -78,24 +79,23 @@ public class FoodRepositoryImpl implements FoodRepository{
             new Food("Zucchini", 1.0, Measurement.CUP, FoodType.VEGETABLE)
     );
 
-
-    public Food getRandomFood(FoodType type){
-        switch(type){
-            case CARBOHYDRATE -> getRandomElement(CARBOHYDRATES);
-            case FRUIT -> getRandomElement(FRUITS);
-            case PROTEIN -> getRandomElement(PROTEINS);
-            case VEGETABLE -> getRandomElement(VEGGIES);
-        }
-        return null;
+    @Override
+    public List<Food> getAllProteins() {
+        return this.PROTEINS;
     }
 
-    private Food getRandomElement(List<Food> list)
-    {
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+    @Override
+    public List<Food> getAllVegetables() {
+        return this.VEGGIES;
     }
 
+    @Override
+    public List<Food> getAllFruits() {
+        return this.FRUITS;
+    }
 
-
-
+    @Override
+    public List<Food> getAllCarbohydrates() {
+        return this.CARBOHYDRATES;
+    }
 }
