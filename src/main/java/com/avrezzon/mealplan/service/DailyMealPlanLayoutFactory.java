@@ -35,18 +35,18 @@ public class DailyMealPlanLayoutFactory {
 
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
-        mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                new Serving(.5, FoodType.CARBOHYDRATE),
-                new Serving(.5, FoodType.PROTEIN)));
-        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
-                new Serving(1.0, FoodType.PROTEIN)));
-        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(1.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.BREAKFAST, List.of(new ServingGuideline(1.0, FoodType.FRUIT),
+                new ServingGuideline(.5, FoodType.CARBOHYDRATE),
+                new ServingGuideline(.5, FoodType.PROTEIN)));
+        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.LUNCH, List.of(new ServingGuideline(1.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.DINNER, List.of(new ServingGuideline(2.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(1.0, FoodType.PROTEIN)));
 
         return new DailyMealPlan(mealPlan);
     }
@@ -54,19 +54,19 @@ public class DailyMealPlanLayoutFactory {
     private static DailyMealPlan make1500CalorieMealPlan() {
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
-        mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(.75, FoodType.PROTEIN)));
-        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
-                new Serving(1.0, FoodType.PROTEIN),
-                new Serving(.5, FoodType.CARBOHYDRATE)));
-        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(2.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.BREAKFAST, List.of(new ServingGuideline(1.0, FoodType.FRUIT),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(.75, FoodType.PROTEIN)));
+        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.LUNCH, List.of(new ServingGuideline(1.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(.5, FoodType.CARBOHYDRATE)));
+        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.DINNER, List.of(new ServingGuideline(2.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(2.0, FoodType.PROTEIN)));
 
         return new DailyMealPlan(mealPlan);
     }
@@ -74,19 +74,19 @@ public class DailyMealPlanLayoutFactory {
     private static DailyMealPlan make1800CalorieMealPlan() {
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
-        mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(1.0, FoodType.PROTEIN)));
-        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                new Serving(1.5, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.CARBOHYDRATE)));
-        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                new Serving(1.5, FoodType.CARBOHYDRATE),
-                new Serving(2.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.BREAKFAST, List.of(new ServingGuideline(1.0, FoodType.FRUIT),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(1.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.LUNCH, List.of(new ServingGuideline(2.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.5, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE)));
+        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new ServingGuideline(1.5, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.DINNER, List.of(new ServingGuideline(2.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.5, FoodType.CARBOHYDRATE),
+                new ServingGuideline(2.0, FoodType.PROTEIN)));
 
         return new DailyMealPlan(mealPlan);
     }
@@ -94,21 +94,21 @@ public class DailyMealPlanLayoutFactory {
     private static DailyMealPlan make2000CalorieMealPlan() {
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
-        mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(1.5, FoodType.PROTEIN)));
-        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT),
-                new Serving(1.0, FoodType.CARBOHYDRATE)));
-        mealPlan.put(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                new Serving(2.0, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.CARBOHYDRATE)));
-        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
-                new Serving(1.0, FoodType.FRUIT)));
-        mealPlan.put(MealType.DINNER, List.of(new Serving(3.0, FoodType.VEGETABLE),
-                new Serving(1.0, FoodType.CARBOHYDRATE),
-                new Serving(2.0, FoodType.PROTEIN)));
-        mealPlan.put(MealType.EVENING_SNACK, List.of(new Serving(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.BREAKFAST, List.of(new ServingGuideline(1.0, FoodType.FRUIT),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(1.5, FoodType.PROTEIN)));
+        mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new ServingGuideline(1.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE)));
+        mealPlan.put(MealType.LUNCH, List.of(new ServingGuideline(2.0, FoodType.VEGETABLE),
+                new ServingGuideline(2.0, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE)));
+        mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new ServingGuideline(1.5, FoodType.PROTEIN),
+                new ServingGuideline(1.0, FoodType.FRUIT)));
+        mealPlan.put(MealType.DINNER, List.of(new ServingGuideline(3.0, FoodType.VEGETABLE),
+                new ServingGuideline(1.0, FoodType.CARBOHYDRATE),
+                new ServingGuideline(2.0, FoodType.PROTEIN)));
+        mealPlan.put(MealType.EVENING_SNACK, List.of(new ServingGuideline(1.0, FoodType.FRUIT)));
 
         return new DailyMealPlan(mealPlan);
     }

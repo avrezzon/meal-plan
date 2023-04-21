@@ -16,7 +16,7 @@ function App() {
     // const data = await res.json();
     // console.log(data);
     // setTemplate(data);
-    const res = await axios.get('http://localhost:8080/meal' , {params: { calories: selection}});
+    const res = await axios.get('meal' , {params: { calories: selection}});
     console.log(res.data);
     setTemplate(res.data);
   }
