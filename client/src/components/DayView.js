@@ -9,16 +9,13 @@ import {
 import { MealView } from "./MealView";
 
 export const DayView = (props) => {
-  const mealTypes = Object.keys(props.meals).map((mealType, index) => (
-    <AccordionItem key={`${index}-${mealType}`}>
-      <AccordionHeader targetId={index.toString()}>{mealType}</AccordionHeader>
+  const mealTypes = props.meals.map((meal, index) => (
+    <AccordionItem key={`${index}-${meal.name}-item`}>
+      <AccordionHeader targetId={index.toString()}>{meal.name}</AccordionHeader>
       <AccordionBody accordionId={index.toString()}>
         <Container>
           <Row>
-            {/*<MealView meal={props.meals[mealType]}/>*/}
-            {props.meals[mealType].map((meal) => (
-              <MealView key={`${index}-${mealType}-${meal.type}`} meal={meal} />
-            ))}
+            <MealView key={`${meal.name}-view`} meal={meal}/>
           </Row>
         </Container>
       </AccordionBody>

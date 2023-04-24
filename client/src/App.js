@@ -17,12 +17,10 @@ import { useState } from "react";
 import {DayView} from "./components/DayView";
 
 function App() {
-  const mealplan = MEAL_PLAN.meals;
+  const mealplan = MEAL_PLAN;
   const [rSelected, setRSelected] = useState(2);
   const [viewSelected, setViewSelected] = useState("today"); // next, today, tomorrow, or week
 
-  console.log(mealplan)
-  console.log(mealplan["LUNCH"])
 
   return (
     <Container>
