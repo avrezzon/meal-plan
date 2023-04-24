@@ -1,33 +1,31 @@
 package com.avrezzon.mealplan.controller;
 
-import com.avrezzon.mealplan.model.DailyMealPlan;
-import com.avrezzon.mealplan.model.DailyMealPlanTemplate;
-import com.avrezzon.mealplan.service.MealPlannerService;
+import com.avrezzon.mealplan.model.Meal;
+import com.avrezzon.mealplan.model.MealTemplate;
+import com.avrezzon.mealplan.service.MealPlanner;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("meal")
 @RequiredArgsConstructor
 public class MealController {
+    private final MealPlanner mealPlanner;
 
-    private final MealPlannerService service;
     @GetMapping
-    public DailyMealPlanTemplate getMealPlanLayout(@RequestParam String calories){
-
-        log.info("Generating meal plan for {} calories.", calories);
-        return service.generateMealPlanTemplate(calories);
-
+    public List<MealTemplate> getMealPlanTemplate(@RequestParam Integer calories) {
+        return mealPlanner.generateMealPlan(calories);
     }
 
     @PostMapping
-    public DailyMealPlan getSampleMealPlan(@RequestParam String calories){
+    public List<Meal> getSampleMealPlan(@RequestParam Integer calories) {
         log.info("Generating meal plan example for {} calories.", calories);
-        return service.generateMealPlanExample(calories);
+        return mealPlanner.generateExampleMealPlan(calories);
     }
-
 
 
 }

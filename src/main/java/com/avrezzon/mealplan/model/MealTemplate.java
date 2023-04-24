@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Serving implements Serializable {
-    private Double servingQty;
-    private FoodType type;
-
+@AllArgsConstructor
+public class MealTemplate implements Serializable {
+    private MealType name;
+    private List<Serving> servingGuideline;
 }

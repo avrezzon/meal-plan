@@ -1,100 +1,87 @@
 package com.avrezzon.mealplan.service;
 
+import com.avrezzon.mealplan.config.MealTimeDefaultConfig;
 import com.avrezzon.mealplan.model.*;
+
 import com.avrezzon.mealplan.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MealPlannerService {
+public class MealPlannerService implements MealPlanner {
 
-    private final FoodRepository repository;
+    private final FoodRepository foodRepository;
 
-
-    public DailyMealPlanTemplate generateMealPlanTemplate(String calories) {
-        switch (calories) {
-            case "1200" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1200);
-            }
-            case "1500" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1500);
-            }
-            case "1800" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_1800);
-            }
-            case "2000" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_2000);
-            }
-            case "2500" -> {
-                return DailyMealPlanLayoutFactory.getDailyMealPlan(CaloricIntake.CALORIES_2500);
-            }
-            default -> throw new IllegalStateException();
-        }
+    @Override
+    public List<MealTemplate> generateMealPlan(Integer calories) {
+        log.info("Creating meal plan template for {} calories.", calories);
+        return MealPlanFactory.createDailyTemplate(calories);
     }
 
-    public DailyMealPlan generateMealPlanExample(String calories) {
-        Map<MealType, List<ServingPortion>> examplePlan = new HashMap<>();
-        var plan = generateMealPlanTemplate(calories);
+    @Override
+    public List<Meal> generateExampleMealPlan(Integer calories) {
+        List<Meal> sampleMeals = new ArrayList<>();
+        List<ServingPortion> servingPortions;
 
-        for (Map.Entry<MealType, List<Serving>> entry : plan.getDailyLayout().entrySet()) {
-            log.debug("Entry Operating on: {}", entry);
+        log.info("Creating sample meal plan for {} calories.", calories);
 
-            List<ServingPortion> actualFoodItems = new ArrayList<>();
-            for (Serving serving : entry.getValue()) {
-                log.debug("Original Guideline: {}", serving);
-                ServingPortion updatedServing = new ServingPortion(serving.getServingQty(), serving.getType(),
-                        List.of(getRandomFood(serving.getType())));
-                log.info("Portion Generated: {}", updatedServing);
-                actualFoodItems.add(updatedServing);
+        var templates = MealPlanFactory.createDailyTemplate(calories);
+
+        for (MealTemplate guide : templates) {
+            log.debug("Creating meals for {}", guide.getName());
+            servingPortions = new ArrayList<>();
+            for (Serving serving : guide.getServingGuideline()) {
+                servingPortions.add(fetchFood(serving));
             }
-            log.debug("Mapped plan: {} : {}", entry.getKey(), actualFoodItems);
-            examplePlan.put(entry.getKey(), actualFoodItems);
+            sampleMeals.add(new Meal(MealTimeDefaultConfig.mapMealTime(guide.getName()),
+                    guide.getName(), servingPortions));
         }
-        return new DailyMealPlan(examplePlan);
+
+        return sampleMeals;
     }
 
-    protected Food getRandomFood(FoodType type) {
-        switch (type) {
-            case CARBOHYDRATE -> {
-                return getRandomElement(repository.getAllCarbohydrates());
-            }
-            case FRUIT -> {
-                return getRandomElement(repository.getAllFruits());
-            }
-            case PROTEIN -> {
-                return getRandomElement(repository.getAllProteins());
-            }
-            case VEGETABLE -> {
-                return getRandomElement(repository.getAllVegetables());
-            }
-            default -> throw new IllegalStateException();
+    //Ideally it would be better to cache the list of food items
+    private ServingPortion fetchFood(Serving config) {
+        List<Food> foodItems = new ArrayList<>();
+        switch (config.getType()) {
+            case FRUIT -> foodItems = foodRepository.getAllFruits();
+            case PROTEIN -> foodItems = foodRepository.getAllProteins();
+            case VEGETABLE -> foodItems = foodRepository.getAllVegetables();
+            case CARBOHYDRATE -> foodItems = foodRepository.getAllCarbohydrates();
         }
+        return new ServingPortion(config.getServingQty(), config.getType(),
+                List.of(selectRandomElement(foodItems)));
     }
 
-    private Food getRandomElement(List<Food> list) {
+    private Food selectRandomElement(List<Food> food) {
         Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+        return food.get(rand.nextInt(food.size()));
     }
 
-    private static class DailyMealPlanLayoutFactory {
-        public static DailyMealPlanTemplate getDailyMealPlan(CaloricIntake intakeLevel) {
-            switch (intakeLevel) {
-                case CALORIES_1200 -> {
-                    return make1200CalorieMealPlan();
+    protected static class MealPlanFactory {
+        protected static List<MealTemplate> createDailyTemplate(Integer calories) {
+            switch (calories) {
+                case 1200 -> {
+                    return create1200Plan();
                 }
-                case CALORIES_1500 -> {
-                    return make1500CalorieMealPlan();
+                case 1500 -> {
+                    return create1500Plan();
                 }
-                case CALORIES_1800 -> {
-                    return make1800CalorieMealPlan();
+                case 1800 -> {
+                    return create1800Plan();
                 }
-                case CALORIES_2000 -> {
-                    return make2000CalorieMealPlan();
+                case 2000 -> {
+                    return create2000Plan();
+                }
+                case 2500 -> {
+                    return create2500Plan();
                 }
                 default -> {
                     log.error("Not really sure how we got here but lets cause a problem");
@@ -103,86 +90,98 @@ public class MealPlannerService {
             }
         }
 
-        private static DailyMealPlanTemplate make1200CalorieMealPlan() {
-
-            Map<MealType, List<Serving>> mealPlan = new HashMap<>();
-
-            mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                    new Serving(.5, FoodType.CARBOHYDRATE),
-                    new Serving(.5, FoodType.PROTEIN)));
-            mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
-                    new Serving(1.0, FoodType.PROTEIN)));
-            mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(1.0, FoodType.PROTEIN)));
-
-            return new DailyMealPlanTemplate(mealPlan);
+        private static List<MealTemplate> create2500Plan() {
+            return List.of(
+                    new MealTemplate(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.5, FoodType.CARBOHYDRATE),
+                            new Serving(1.5, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_MORNING_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(2.0, FoodType.PROTEIN),
+                            new Serving(1.5, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(2.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.DINNER, List.of(new Serving(3.0, FoodType.VEGETABLE),
+                            new Serving(2.0, FoodType.CARBOHYDRATE),
+                            new Serving(3.0, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.EVENING_SNACK, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.PROTEIN)))
+            );
         }
 
-        private static DailyMealPlanTemplate make1500CalorieMealPlan() {
-            Map<MealType, List<Serving>> mealPlan = new HashMap<>();
-
-            mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(.75, FoodType.PROTEIN)));
-            mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
-                    new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(.5, FoodType.CARBOHYDRATE)));
-            mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(2.0, FoodType.PROTEIN)));
-
-            return new DailyMealPlanTemplate(mealPlan);
+        private static List<MealTemplate> create2000Plan() {
+            return List.of(
+                    new MealTemplate(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(1.5, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(2.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.DINNER, List.of(new Serving(3.0, FoodType.VEGETABLE),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(2.0, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.EVENING_SNACK, List.of(new Serving(1.0, FoodType.FRUIT)))
+            );
         }
 
-        private static DailyMealPlanTemplate make1800CalorieMealPlan() {
-            Map<MealType, List<Serving>> mealPlan = new HashMap<>();
-
-            mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(1.0, FoodType.PROTEIN)));
-            mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                    new Serving(1.5, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.CARBOHYDRATE)));
-            mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                    new Serving(1.5, FoodType.CARBOHYDRATE),
-                    new Serving(2.0, FoodType.PROTEIN)));
-
-            return new DailyMealPlanTemplate(mealPlan);
+        private static List<MealTemplate> create1800Plan() {
+            return List.of(
+                    new MealTemplate(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(1.0, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(1.5, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(1.5, FoodType.CARBOHYDRATE),
+                            new Serving(2.0, FoodType.PROTEIN)))
+            );
         }
 
-        private static DailyMealPlanTemplate make2000CalorieMealPlan() {
-            Map<MealType, List<Serving>> mealPlan = new HashMap<>();
+        private static List<MealTemplate> create1500Plan() {
+            return List.of(
+                    new MealTemplate(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(.75, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
+                            new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(.5, FoodType.CARBOHYDRATE))),
+                    new MealTemplate(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(2.0, FoodType.PROTEIN)))
+            );
+        }
 
-            mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(1.5, FoodType.PROTEIN)));
-            mealPlan.put(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT),
-                    new Serving(1.0, FoodType.CARBOHYDRATE)));
-            mealPlan.put(MealType.LUNCH, List.of(new Serving(2.0, FoodType.VEGETABLE),
-                    new Serving(2.0, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.CARBOHYDRATE)));
-            mealPlan.put(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.5, FoodType.PROTEIN),
-                    new Serving(1.0, FoodType.FRUIT)));
-            mealPlan.put(MealType.DINNER, List.of(new Serving(3.0, FoodType.VEGETABLE),
-                    new Serving(1.0, FoodType.CARBOHYDRATE),
-                    new Serving(2.0, FoodType.PROTEIN)));
-            mealPlan.put(MealType.EVENING_SNACK, List.of(new Serving(1.0, FoodType.FRUIT)));
-
-            return new DailyMealPlanTemplate(mealPlan);
+        private static List<MealTemplate> create1200Plan() {
+            return List.of(
+                    new MealTemplate(MealType.BREAKFAST, List.of(new Serving(1.0, FoodType.FRUIT),
+                            new Serving(.5, FoodType.CARBOHYDRATE),
+                            new Serving(.5, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_MORNING_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.LUNCH, List.of(new Serving(1.0, FoodType.VEGETABLE),
+                            new Serving(1.0, FoodType.PROTEIN))),
+                    new MealTemplate(MealType.MID_AFTERNOON_SNACK, List.of(new Serving(1.0, FoodType.PROTEIN),
+                            new Serving(1.0, FoodType.FRUIT))),
+                    new MealTemplate(MealType.DINNER, List.of(new Serving(2.0, FoodType.VEGETABLE),
+                            new Serving(1.0, FoodType.CARBOHYDRATE),
+                            new Serving(1.0, FoodType.PROTEIN)))
+            );
         }
     }
 }

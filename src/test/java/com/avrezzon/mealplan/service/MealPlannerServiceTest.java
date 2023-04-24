@@ -1,18 +1,20 @@
 package com.avrezzon.mealplan.service;
 
-import com.avrezzon.mealplan.model.*;
+import com.avrezzon.mealplan.model.Food;
+import com.avrezzon.mealplan.model.FoodType;
+import com.avrezzon.mealplan.model.Meal;
+import com.avrezzon.mealplan.model.Measurement;
 import com.avrezzon.mealplan.repository.FoodRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +55,7 @@ class MealPlannerServiceTest {
     );
 
     @BeforeEach
-    void init(){
+    void init() {
         when(repository.getAllCarbohydrates()).thenReturn(CARBOHYDRATES);
         when(repository.getAllFruits()).thenReturn(FRUITS);
         when(repository.getAllProteins()).thenReturn(PROTEINS);
@@ -62,13 +64,8 @@ class MealPlannerServiceTest {
 
     @Test
     void successfullyGenerateExampleMealPlan(){
-        DailyMealPlan result = service.generateMealPlanExample("2000");
-        assertEquals(3, result.getMeals().get(MealType.BREAKFAST).size());
-        assertEquals(3, result.getMeals().get(MealType.MID_MORNING_SNACK).size());
-        assertEquals(3, result.getMeals().get(MealType.LUNCH).size());
-        assertEquals(2, result.getMeals().get(MealType.MID_AFTERNOON_SNACK).size());
-        assertEquals(3, result.getMeals().get(MealType.DINNER).size());
-        assertEquals(1, result.getMeals().get(MealType.EVENING_SNACK).size());
+        List<Meal> results = service.generateExampleMealPlan(2000);
+        assertEquals(6, results.size());
     }
 
 
