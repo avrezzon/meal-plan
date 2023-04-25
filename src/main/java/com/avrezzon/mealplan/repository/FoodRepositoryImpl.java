@@ -49,7 +49,7 @@ public class FoodRepositoryImpl implements FoodRepository{
             new Food("Whole eggs", 3.0, Measurement.UNIT, FoodType.PROTEIN),
             new Food("Beans", 1.0, Measurement.CUP, FoodType.PROTEIN),
             new Food("Legumes", 1.0, Measurement.CUP, FoodType.PROTEIN),
-            new Food("String chees", 2.0, Measurement.UNIT, FoodType.PROTEIN)
+            new Food("String cheese", 2.0, Measurement.UNIT, FoodType.PROTEIN)
     );
 
     private final List<Food> VEGGIES = List.of(

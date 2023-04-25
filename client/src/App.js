@@ -18,8 +18,8 @@ import {DayView} from "./components/DayView";
 
 function App() {
   const mealplan = MEAL_PLAN;
-  const [rSelected, setRSelected] = useState(2);
-  const [viewSelected, setViewSelected] = useState("today"); // next, today, tomorrow, or week
+  const [rSelected, setRSelected] = useState(1);
+  const [viewSelected, setViewSelected] = useState("today"); //  today, tomorrow, or week
 
 
   return (
@@ -38,7 +38,7 @@ function App() {
             onClick={() => setRSelected(1)}
             active={rSelected === 1}
           >
-            Next Meal
+            Today's Meals
           </Button>
           <Button
             color="primary"
@@ -46,21 +46,13 @@ function App() {
             onClick={() => setRSelected(2)}
             active={rSelected === 2}
           >
-            Today's Meals
+            Tomorrow's Meals
           </Button>
           <Button
             color="primary"
             outline
             onClick={() => setRSelected(3)}
             active={rSelected === 3}
-          >
-            Tomorrow's Meals
-          </Button>
-          <Button
-            color="primary"
-            outline
-            onClick={() => setRSelected(4)}
-            active={rSelected === 4}
           >
             This Week's Meals
           </Button>
