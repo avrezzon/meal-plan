@@ -1,13 +1,16 @@
 package com.avrezzon.mealplan.service;
 
 import com.avrezzon.mealplan.config.MealTimeDefaultConfig;
+import com.avrezzon.mealplan.dto.MealDto;
 import com.avrezzon.mealplan.model.*;
 
 import com.avrezzon.mealplan.repository.FoodRepository;
+import com.avrezzon.mealplan.repository.MealRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,19 +18,18 @@ import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MealPlannerService implements MealPlanner {
+public class MealPlannerService{
 
     private final FoodRepository foodRepository;
+    private final MealRepository mealRepository;
 
-    @Override
     public List<MealTemplate> generateMealPlan(Integer calories) {
         log.info("Creating meal plan template for {} calories.", calories);
         return MealPlanFactory.createDailyTemplate(calories);
     }
 
-    @Override
-    public List<Meal> generateExampleMealPlan(Integer calories) {
-        List<Meal> sampleMeals = new ArrayList<>();
+    public List<MealDto> generateExampleMealPlan(Integer calories) {
+        List<MealDto> sampleMeals = new ArrayList<>();
         List<ServingPortion> servingPortions;
 
         log.info("Creating sample meal plan for {} calories.", calories);
@@ -40,8 +42,7 @@ public class MealPlannerService implements MealPlanner {
             for (Serving serving : guide.getServingGuideline()) {
                 servingPortions.add(fetchFood(serving));
             }
-            sampleMeals.add(new Meal(MealTimeDefaultConfig.mapMealTime(guide.getName()),
-                    guide.getName(), servingPortions));
+            sampleMeals.add(new MealDto(guide.getName(), servingPortions));
         }
 
         return sampleMeals;
@@ -63,6 +64,19 @@ public class MealPlannerService implements MealPlanner {
     private Food selectRandomElement(List<Food> food) {
         Random rand = new Random();
         return food.get(rand.nextInt(food.size()));
+    }
+
+
+    public Meal createMeal(MealDto dto, String username){
+        Meal meal = Meal.builder()
+                .id(Meal.MealReference.builder()
+                        .mealType(dto.getName())
+                        .date(LocalDate.now()) //FIXME
+                        .username(username)
+                        .build())
+                .servingPortions(dto.getServingPortions())
+                .build();
+        return mealRepository.save(meal);
     }
 
     protected static class MealPlanFactory {

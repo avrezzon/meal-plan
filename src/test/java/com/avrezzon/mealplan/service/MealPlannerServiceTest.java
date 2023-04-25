@@ -1,5 +1,6 @@
 package com.avrezzon.mealplan.service;
 
+import com.avrezzon.mealplan.dto.MealDto;
 import com.avrezzon.mealplan.model.Food;
 import com.avrezzon.mealplan.model.FoodType;
 import com.avrezzon.mealplan.model.Meal;
@@ -64,7 +65,7 @@ class MealPlannerServiceTest {
 
     @Test
     void successfullyGenerateExampleMealPlan(){
-        List<Meal> results = service.generateExampleMealPlan(2000);
+        List<MealDto> results = service.generateExampleMealPlan(2000);
         assertEquals(6, results.size());
     }
 
