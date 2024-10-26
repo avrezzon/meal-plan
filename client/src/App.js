@@ -1,26 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-  Col,
-  Container,
-  Row,
-} from "reactstrap";
+import { Button, ButtonGroup, Col, Container, Row } from "reactstrap";
 import { MEAL_PLAN } from "./mock-data/meal-plan";
 import { useState } from "react";
-import {DayView} from "./components/DayView";
+import { DayView } from "./components/DayView";
 
 function App() {
   const mealplan = MEAL_PLAN;
   const [rSelected, setRSelected] = useState(1);
-  const [viewSelected, setViewSelected] = useState("today"); //  today, tomorrow, or week
-
+  // const [viewSelected, setViewSelected] = useState("today"); //  today, tomorrow, or week
 
   return (
     <Container>
@@ -58,10 +45,12 @@ function App() {
           </Button>
         </ButtonGroup>
       </Row>
-      <br/>
-        <Row><Col>Meals for April 21, 2023</Col></Row>
       <br />
-      <DayView meals={mealplan}/>
+      <Row>
+        <Col>Meals for April 21, 2023</Col>
+      </Row>
+      <br />
+      <DayView meals={mealplan} />
     </Container>
   );
 }
